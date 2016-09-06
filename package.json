@@ -1,14 +1,14 @@
 {
-  "name": "canvas-image-uploader",
-  "version": "1.0.1",
-  "description": "Resize and rotate images by EXIF orientation on the client side during upload. This uses the HTML Canvas element and HTML5 FileReader.",
-  "main": "canvas-image-uploader.js",
+  "name": "canvas-image-uploader-plus",
+  "version": "1.0.0",
+  "description": "Resize and rotate images by EXIF orientation on the client side during upload. This uses the HTML Canvas element and HTML5 FileReader. Forked from Anton Jansson.",
+  "main": "canvas-image-uploader-plus.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ajgarn/CanvasImageUploader.git"
+    "url": "git+https://github.com/Bixie/CanvasImageUploader.git"
   },
   "keywords": [
     "image",
@@ -16,12 +16,12 @@
     "rotate",
     "upload"
   ],
-  "author": "Anton Jansson",
+  "author": "Anton Jansson/Matthijs Alles",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/ajgarn/CanvasImageUploader/issues"
+    "url": "https://github.com/Bixie/CanvasImageUploader/issues"
   },
-  "homepage": "https://github.com/ajgarn/CanvasImageUploader#readme",
+  "homepage": "https://github.com/Bixie/CanvasImageUploader#readme",
   "dependencies": {
     "exif-js": "^2.1.1"
   }

@@ -1,8 +1,9 @@
 # CanvasImageUploader
 Resize and rotate images by EXIF orientation on the client side during upload. This uses the HTML Canvas element and HTML5 FileReader.
+Forked from [Anton Jansson](https://github.com/ajgarn/CanvasImageUploader)
 
 ## Use
-Require from npm: `npm install canvas-image-uploader --save`
+Require from npm: `npm install https://github.com/Bixie/CanvasImageUploader --save`
 
 Or, if you just want to include the Javascript file in your HTML, make sure to also include [https://github.com/jseidelin/exif-js](https://github.com/jseidelin/exif-js), before CanvasImageUploader.
     
