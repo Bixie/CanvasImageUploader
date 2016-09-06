@@ -229,6 +229,14 @@ function CanvasImageUploaderPlus(options) {
             reader.readAsDataURL(file);
         },
 
+        setImageToCanvas(image, $canvas, callback) {
+            this.newImage();
+            if (!image) {
+                return;
+            }
+            readImageToCanvasOnLoad(image, $canvas, callback);
+        },
+
         /**
          * Read the canvas data and save it as a binary byte array to image data variable.
          * Get this data using the method getImageData().
