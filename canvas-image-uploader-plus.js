@@ -150,7 +150,7 @@ function CanvasImageUploaderPlus(options) {
     }
 
     function readImageToCanvasOnLoad(image, $canvas, callback) {
-        getExifOrientation(image, function (orientation) {
+        getExifOrientation(image, (orientation) => {
             drawOnCanvas(image, $canvas, orientation, options.maxSize);
             if (callback) {
                 callback();
@@ -166,7 +166,7 @@ function CanvasImageUploaderPlus(options) {
             return;
         }
 
-        EXIF.getData(image, function () {
+        EXIF.getData(image, () => {
             var orientation = EXIF.getTag(image, 'Orientation') || 1;
             if (callback) {
                 callback(orientation);
@@ -180,7 +180,7 @@ function CanvasImageUploaderPlus(options) {
         /**
          * Run to initialize CanvasImageUploaderPlus.
          */
-        newImage: function() {
+        newImage() {
             imageData = null;
             image = new Image();
         },
@@ -189,7 +189,7 @@ function CanvasImageUploaderPlus(options) {
          * Returns the image data if any file has been read.
          * @returns {Blob|null}
          */
-        getImageData: function() {
+        getImageData() {
             return imageData;
         },
 
@@ -200,7 +200,7 @@ function CanvasImageUploaderPlus(options) {
          * @param $destination The destination canvas to draw onto.
          * @param maxSize Maximum width or height of the destination canvas.
          */
-        copyToCanvas: function (source, $destination, maxSize) {
+        copyToCanvas(source, $destination, maxSize) {
             var size = calculateSize(source, maxSize);
             setDimensions($destination, size, 1);
             var destCtx = $destination[0].getContext('2d');
@@ -214,15 +214,15 @@ function CanvasImageUploaderPlus(options) {
          * @param $canvas The canvas (jQuery) object to draw on.
          * @param callback Function that is called when the operation has finished.
          */
-        readImageToCanvas: function(file, $canvas, callback) {
+        readImageToCanvas(file, $canvas, callback) {
             this.newImage();
             if (!file) {
                 return;
             }
 
             var reader = new FileReader();
-            reader.onload = function (fileReaderEvent) {
-                image.onload = function () { readImageToCanvasOnLoad(this, $canvas, callback); };
+            reader.onload = (fileReaderEvent) => {
+                image.onload = () => readImageToCanvasOnLoad(image, $canvas, callback);
                 image.src = fileReaderEvent.target.result;      // The URL from FileReader
 
             };
@@ -234,7 +234,7 @@ function CanvasImageUploaderPlus(options) {
          * Get this data using the method getImageData().
          * @param canvas
          */
-        saveCanvasToImageData: function(canvas) {
+        saveCanvasToImageData(canvas) {
             var base64 = canvas.toDataURL('image/jpeg', options.jpegQuality)
                 .replace(/^data:image\/(png|jpeg|jpg|gif);base64,/, '');
             imageData = base64toBlob(base64, 'image/jpeg');       // Byte array
