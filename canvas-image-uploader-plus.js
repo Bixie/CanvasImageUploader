@@ -1,21 +1,26 @@
 /**
  * Resize and rotate images by EXIF orientation on the client side during upload. This uses
  * the HTML Canvas element and HTML5 FileReader.
+ * Forked from Anton Jansson: https://github.com/ajgarn/CanvasImageUploader.
  *
  * This class requires the Javascript file from https://github.com/jseidelin/exif-js
  *
- * See the GitHub repo for examples: https://github.com/ajgarn/CanvasImageUploader.
+ * See the GitHub repo for examples: https://github.com/Bixie/CanvasImageUploader.
  *
- * @class CanvasImageUploader
+ * @class CanvasImageUploaderPlus
  * @author ajgarn
- * @see https://github.com/ajgarn/CanvasImageUploader
+ * @see https://github.com/Bixie/CanvasImageUploader
  */
 var EXIF = EXIF || require('exif-js');
 
-function CanvasImageUploader(options) {
+function CanvasImageUploaderPlus(options) {
     options = options || {};
-    if (typeof options.maxSize === 'undefined') options.maxSize = 1500;
-    if (typeof options.jpegQuality === 'undefined') options.jpegQuality = 0.7;
+    if (typeof options.maxSize === 'undefined') {
+        options.maxSize = 1500;
+    }
+    if (typeof options.jpegQuality === 'undefined') {
+        options.jpegQuality = 0.7;
+    }
 
     var image;          // Image object (<img>)
     var imageData;      // Image from canvas as byte array
@@ -119,8 +124,12 @@ function CanvasImageUploader(options) {
         ctx.clearRect(0, 0, $canvas.width(), $canvas.height());
 
         // Flip vertically or horizontally
-        if ('flip-x' == exifOrientation.op) flipContext(ctx, canvas, true, false);
-        if ('flip-y' == exifOrientation.op) flipContext(ctx, canvas, false, true);
+        if ('flip-x' === exifOrientation.op) {
+            flipContext(ctx, canvas, true, false);
+        }
+        if ('flip-y' === exifOrientation.op) {
+            flipContext(ctx, canvas, false, true);
+        }
 
         // Rotate image
         if (exifOrientation.degrees) {
@@ -143,10 +152,11 @@ function CanvasImageUploader(options) {
     function readImageToCanvasOnLoad(image, $canvas, callback) {
         getExifOrientation(image, function (orientation) {
             drawOnCanvas(image, $canvas, orientation, options.maxSize);
-            if (callback)
+            if (callback) {
                 callback();
-            else
+            } else {
                 console.warn('No callback for readImageToCanvas');
+            }
         });
     }
 
@@ -158,16 +168,17 @@ function CanvasImageUploader(options) {
 
         EXIF.getData(image, function () {
             var orientation = EXIF.getTag(image, 'Orientation') || 1;
-            if (callback)
+            if (callback) {
                 callback(orientation);
-            else
-                console.warn('No callback for getExifOrientation()');
+            } else {
+                console.warn('No callback for getExifOrientation');
+            }
         });
     }
 
     return {
         /**
-         * Run to initialize CanvasImageUploader.
+         * Run to initialize CanvasImageUploaderPlus.
          */
         newImage: function() {
             imageData = null;
@@ -205,8 +216,9 @@ function CanvasImageUploader(options) {
          */
         readImageToCanvas: function(file, $canvas, callback) {
             this.newImage();
-            if (!file)
+            if (!file) {
                 return;
+            }
 
             var reader = new FileReader();
             reader.onload = function (fileReaderEvent) {
@@ -227,9 +239,9 @@ function CanvasImageUploader(options) {
                 .replace(/^data:image\/(png|jpeg|jpg|gif);base64,/, '');
             imageData = base64toBlob(base64, 'image/jpeg');       // Byte array
         }
-    }
+    };
 }
 
 if (typeof module !== 'undefined') {
-    module.exports = CanvasImageUploader;
+    module.exports = CanvasImageUploaderPlus;
 }
